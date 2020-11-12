@@ -32,7 +32,7 @@ const serverlessConfiguration: Serverless = {
   },
   functions: {
     server: {
-      handler: "index.server",
+      handler: "./src/index.server",
       events: [
         {
           http: {
