@@ -1,26 +1,29 @@
 import AWS from "aws-sdk";
 import { handler } from "./Types";
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+import { createError, createSuccess } from "./helpers";
 
-export const basic: handler = async (_event, _context) => {
-  var params = {
-    TableName: process.env.TABLE,
-    Item: {
-      email: "testing@gmail.com",
-    },
-  };
+// If in production, connect to production DynamoDB server.
+const config =
+  process.env.NODE_ENV === "development"
+    ? { region: "us-east-1", endpoint: "http://localhost:8000" }
+    : {};
+const dynamoDb = new AWS.DynamoDB.DocumentClient(config);
 
+type Input = {
+  [key: string]: string;
+};
+
+export const basic: handler = async (event, _context) => {
   try {
+    // Input is JSON
+    const input: Input = JSON.parse(event.body);
+    var params = {
+      TableName: process.env.TABLE,
+      Item: { email: input.email },
+    };
     await dynamoDb.put(params).promise();
-    return {
-      statusCode: 200,
-      body: "Hooray",
-    };
+    return createSuccess(input.email);
   } catch (err) {
-    console.log(err);
-    return {
-      statusCode: 502,
-      body: "Failure",
-    };
+    return createError(err);
   }
 };

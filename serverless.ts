@@ -18,7 +18,6 @@ const serverlessConfiguration: Serverless = {
     "serverless-webpack",
     "serverless-offline",
     "serverless-dotenv-plugin",
-    "serverless-dynamodb-local",
   ],
   provider: {
     name: "aws",
