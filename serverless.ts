@@ -74,7 +74,7 @@ const serverlessConfiguration: Serverless = {
   },
   functions: {
     basic: {
-      handler: "./src/index.basic",
+      handler: "./src/functions/index.basic",
       events: [
         {
           http: {
@@ -85,7 +85,7 @@ const serverlessConfiguration: Serverless = {
       ],
     },
     server: {
-      handler: "./src/index.server",
+      handler: "./src/server.server",
       events: [
         {
           http: {
