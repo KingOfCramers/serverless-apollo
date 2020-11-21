@@ -1,13 +1,6 @@
-import AWS from "aws-sdk";
 import { handler } from "./Types";
-import { createError, createSuccess } from "./helpers";
-
-// If in production, connect to production DynamoDB server.
-const config =
-  process.env.NODE_ENV === "development"
-    ? { region: "us-east-1", endpoint: "http://localhost:8000" }
-    : {};
-const dynamoDb = new AWS.DynamoDB.DocumentClient(config);
+import { createError, createSuccess } from "../common";
+import { dynamoDb } from "../db";
 
 type Input = {
   [key: string]: string;
